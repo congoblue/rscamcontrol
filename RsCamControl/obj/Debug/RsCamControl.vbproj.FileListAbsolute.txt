@@ -1,0 +1,11 @@
+C:\Users\Boardroom\Documents\Visual Studio 2015\Projects\RsCamControl\RsCamControl\bin\Debug\RsCamControl.exe.config
+C:\Users\Boardroom\Documents\Visual Studio 2015\Projects\RsCamControl\RsCamControl\bin\Debug\RsCamControl.exe
+C:\Users\Boardroom\Documents\Visual Studio 2015\Projects\RsCamControl\RsCamControl\bin\Debug\RsCamControl.pdb
+C:\Users\Boardroom\Documents\Visual Studio 2015\Projects\RsCamControl\RsCamControl\bin\Debug\RsCamControl.xml
+C:\Users\Boardroom\Documents\Visual Studio 2015\Projects\RsCamControl\RsCamControl\obj\Debug\RsCamControl.vbprojResolveAssemblyReference.cache
+C:\Users\Boardroom\Documents\Visual Studio 2015\Projects\RsCamControl\RsCamControl\obj\Debug\RsCamControl.Form1.resources
+C:\Users\Boardroom\Documents\Visual Studio 2015\Projects\RsCamControl\RsCamControl\obj\Debug\RsCamControl.Resources.resources
+C:\Users\Boardroom\Documents\Visual Studio 2015\Projects\RsCamControl\RsCamControl\obj\Debug\RsCamControl.vbproj.GenerateResource.Cache
+C:\Users\Boardroom\Documents\Visual Studio 2015\Projects\RsCamControl\RsCamControl\obj\Debug\RsCamControl.exe
+C:\Users\Boardroom\Documents\Visual Studio 2015\Projects\RsCamControl\RsCamControl\obj\Debug\RsCamControl.xml
+C:\Users\Boardroom\Documents\Visual Studio 2015\Projects\RsCamControl\RsCamControl\obj\Debug\RsCamControl.pdb
