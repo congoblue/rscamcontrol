@@ -46,6 +46,10 @@ Public Class Form1
     Dim ack As Byte
     Dim deadband As Integer
     Dim camnum As Integer
+    Dim prevbtnstate1 As Integer = 0
+    Dim prevbtnstate2 As Integer = 0
+    Dim startuptimer As Integer = 0
+    Dim connectok As Boolean = False
 
     Private Sub Receiver()
         'Dim endPoint As IPEndPoint = New IPEndPoint(IPAddress.Any, port) 'Listen for incoming data from any IP address on the specified port (I personally select 9653)
@@ -62,7 +66,7 @@ Public Class Form1
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         deadband = 2000
         camnum = 1
-        PictureBox1.BackColor = Color.White
+        PictureBox1.BackColor = Color.Red
         PictureBox2.BackColor = Color.DimGray
 
         myjoyEX.dwSize = 64
@@ -80,6 +84,9 @@ Public Class Form1
         udpListen.Client.Bind(New IPEndPoint(IPAddress.Any, 1260))
         iepRemoteEndPoint = New IPEndPoint(IPAddress.Any, 1260)
         'udpClient.Connect("192.168.92.162", 52381)
+
+        connectok = True
+
         ReDim sendBytes(20)
         ReDim receiveBytes(20)
         Dim start As ThreadStart = New ThreadStart(AddressOf Receiver)
@@ -179,16 +186,59 @@ Public Class Form1
             op = op & vbCrLf
             op = op & "pov:" & (.dwPOV / 100).ToString     'POV hat (in 1/100ths of degrees, so divided by 100 to give degrees)
 
-            If (.dwButtons = 8) Then
-                camnum = 1
-                PictureBox1.BackColor = Color.White
-                PictureBox2.BackColor = Color.DimGray
+            If (.dwButtons <> prevbtnstate1) Then 'button state has changed (top 8 buttons)
+
+                If (.dwButtons > prevbtnstate1) Then 'new button pressed (otherwise released)
+                    If (.dwButtons And 1) Then
+                        camnum = 1
+                        PictureBox1.BackColor = Color.Red
+                        PictureBox2.BackColor = Color.DimGray
+                    End If
+                    If (.dwButtons And 2) Then
+                        camnum = 2
+                        PictureBox1.BackColor = Color.DimGray
+                        PictureBox2.BackColor = Color.Red
+                    End If
+                    If (.dwButtons And 4) Then 'focus lock cam 1
+                        If (CheckBox1.Checked = True) Then CheckBox1.Checked = False : Else CheckBox1.Checked = True
+                    End If
+                    If (.dwButtons And 8) Then 'focus lock cam 2
+                        If (CheckBox2.Checked = True) Then CheckBox2.Checked = False : Else CheckBox2.Checked = True
+                    End If
+                    If (.dwButtons And 16) Then 'ev cam 1
+                        If (NumericUpDown1.Value < 7) Then NumericUpDown1.Value = NumericUpDown1.Value + 1
+                    End If
+                    If (.dwButtons And 32) Then 'ev cam 1
+                        If (NumericUpDown1.Value > -7) Then NumericUpDown1.Value = NumericUpDown1.Value - 1
+                    End If
+                    If (.dwButtons And 64) Then 'ev cam 2
+                        If (NumericUpDown2.Value < 7) Then NumericUpDown2.Value = NumericUpDown2.Value + 1
+                    End If
+                    If (.dwButtons And 128) Then 'ev cam 2
+                        If (NumericUpDown2.Value > -7) Then NumericUpDown2.Value = NumericUpDown2.Value - 1
+                    End If
+                End If
+
+                prevbtnstate1 = .dwButtons
             End If
-            If (.dwButtons = 4) Then
-                camnum = 2
-                PictureBox1.BackColor = Color.DimGray
-                PictureBox2.BackColor = Color.White
+
+            If (.dwRpos <> prevbtnstate2) Then 'button state has changed (bottom 8 buttons)
+
+                If (.dwRpos <> prevbtnstate2) Then  'new button pressed (otherwise released)
+                    If (.dwRpos And &H100) Then SendPreset(1, 1) 'preset 1 cam 1
+                    If (.dwRpos And &H200) Then SendPreset(1, 2)
+                    If (.dwRpos And &H400) Then SendPreset(1, 3)
+                    If (.dwRpos And &H800) Then SendPreset(1, 4)
+                    If (.dwRpos And &H1000) Then SendPreset(2, 1) 'preset 1 cam 2
+                    If (.dwRpos And &H2000) Then SendPreset(2, 2)
+                    If (.dwRpos And &H4000) Then SendPreset(2, 3)
+                    If (.dwRpos And &H8000) Then SendPreset(2, 4)
+
+                End If
+
+                prevbtnstate2 = .dwRpos
             End If
+
 
             Dim dir = 0
 
@@ -211,7 +261,7 @@ Public Class Form1
 
             If (.dwXpos < 32767 - deadband) Or (.dwXpos > 32767 + deadband) Then
                 sendBytes(4) = xspd
-                If (.dwXpos < 32768) Then
+                If (.dwXpos > 32768) Then
                     dir = dir Or 1
                     sendBytes(6) = &H1
                 Else
@@ -223,7 +273,7 @@ Public Class Form1
             If (.dwYpos < 32767 - deadband) Or (.dwYpos > 32767 + deadband) Then
 
                 sendBytes(5) = yspd
-                If (.dwYpos > 32768) Then
+                If (.dwYpos < 32768) Then
                     dir = dir Or 4
                     sendBytes(7) = &H1
                 Else
@@ -278,11 +328,38 @@ Public Class Form1
 
         End With
         TextBox1.Text = op
-    End Sub
 
-    Private Sub NumericUpDown1_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown1.ValueChanged, NumericUpDown2.ValueChanged
-        Dim v = CType(sender, NumericUpDown).Value
-        v = v + 7
+        If connectok Then 'send some initial values so cams in known state
+            If (startuptimer < 100) Then startuptimer = startuptimer + 1
+
+            If (startuptimer = 10) Then
+                sendBytes(0) = &H81
+                sendBytes(1) = &H1
+                sendBytes(2) = &H6
+                sendBytes(3) = &H1
+                sendBytes(4) = &H18
+                sendBytes(5) = &HFF
+                Dim oc = camnum
+                camnum = 1 : ViscaSend(sendBytes, 6) 'set max preset recall speed
+                camnum = 2 : ViscaSend(sendBytes, 6)
+                camnum = oc
+            End If
+
+            If (startuptimer = 20) Then
+                SendFocusLock(1, False)
+                SendFocusLock(2, False)
+            End If
+
+            If (startuptimer = 30) Then
+                SendEV(1, 0)
+                SendEV(2, 0)
+            End If
+
+        End If
+
+    End Sub
+    Sub SendEV(cam As Integer, ev As Integer)
+        If (ev < -7) Or (ev > 7) Then Return
         Dim oc = camnum
         sendBytes(0) = &H81
         sendBytes(1) = &H1
@@ -290,55 +367,63 @@ Public Class Form1
         sendBytes(3) = &H4E
         sendBytes(4) = &H0
         sendBytes(5) = &H0
-        sendBytes(6) = (v And &HF0) / 16
-        sendBytes(7) = v And &HF
+        sendBytes(6) = ((ev + 7) And &HF0) / 16
+        sendBytes(7) = (ev + 7) And &HF
         sendBytes(8) = &HFF
-        If CType(sender, NumericUpDown).Name = "NumericUpDown1" Then camnum = 1
-        If CType(sender, NumericUpDown).Name = "NumericUpDown2" Then camnum = 2
+        camnum = cam
         ViscaSend(sendBytes, 9)
+        camnum = oc
+    End Sub
+    Private Sub NumericUpDown1_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown1.ValueChanged, NumericUpDown2.ValueChanged
+        Dim v = CType(sender, NumericUpDown).Value
+        If CType(sender, NumericUpDown).Name = "NumericUpDown1" Then SendEV(1, v)
+        If CType(sender, NumericUpDown).Name = "NumericUpDown2" Then SendEV(2, v)
+    End Sub
+
+    Sub SendFocusLock(cam As Integer, state As Integer)
+        sendBytes(0) = &H81
+        sendBytes(1) = &H1
+        sendBytes(2) = &H4
+        sendBytes(3) = &H38
+        If (state = True) Then sendBytes(4) = &H3 : Else sendBytes(4) = &H2
+        sendBytes(5) = &HFF
+        Dim oc = camnum
+        camnum = cam
+        ViscaSend(sendBytes, 6)
         camnum = oc
     End Sub
 
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged, CheckBox2.CheckedChanged
         Dim v = CType(sender, CheckBox).Checked
-        Dim oc = camnum
-        sendBytes(0) = &H81
-        sendBytes(1) = &H1
-        sendBytes(2) = &H4
-        sendBytes(3) = &H38
-        If (v = True) Then sendBytes(4) = &H3 : Else sendBytes(4) = &H2
-        sendBytes(5) = &HFF
-        If CType(sender, CheckBox).Name = "CheckBox1" Then camnum = 1
-        If CType(sender, CheckBox).Name = "CheckBox2" Then camnum = 2
-        ViscaSend(sendBytes, 6)
-        camnum = oc
+        If CType(sender, CheckBox).Name = "CheckBox1" Then SendFocusLock(1, v)
+        If CType(sender, CheckBox).Name = "CheckBox2" Then SendFocusLock(2, v)
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click, Button2.Click, Button3.Click, Button4.Click, Button8.Click, Button7.Click, Button6.Click, Button5.Click
-        Dim n = CType(sender, Button).Name
-        Dim v = CInt(Strings.Right(n, 1))
-        Dim pn = v
-        If pn > 4 Then pn = pn - 4
+    Sub SendPreset(cam As Integer, prnum As Integer)
         Dim oc = camnum
-
-        sendBytes(0) = &H81
-        sendBytes(1) = &H1
-        sendBytes(2) = &H6
-        sendBytes(3) = &H1
-        sendBytes(4) = &H18
-        sendBytes(5) = &HFF
-        ViscaSend(sendBytes, 6) 'set max preset recall speed
 
         sendBytes(0) = &H81
         sendBytes(1) = &H1
         sendBytes(2) = &H4
         sendBytes(3) = &H3F
-        If (RadioButton1.Checked = True) Then sendBytes(4) = &H2 : Else sendBytes(4) = &H1
-        sendBytes(5) = pn
+        If (RadioButton1.Checked = True) Then sendBytes(4) = &H2 : Else sendBytes(4) = &H1 '2=recall 1=store
+        sendBytes(5) = prnum
         sendBytes(6) = &HFF
-        If (v <= 4) Then camnum = 1 Else camnum = 2
+        camnum = cam
         ViscaSend(sendBytes, 7)
         camnum = oc
-        RadioButton1.Checked = True
+        RadioButton1.Checked = True 'automatically cancel preset save mode
+    End Sub
+
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click, Button2.Click, Button3.Click, Button4.Click, Button8.Click, Button7.Click, Button6.Click, Button5.Click
+        Dim n = CType(sender, Button).Name
+        Dim v = CInt(Strings.Right(n, 1))
+        Dim pn = v
+        If pn > 4 Then
+            SendPreset(2, pn - 4)
+        Else
+            SendPreset(1, pn)
+        End If
     End Sub
 End Class
