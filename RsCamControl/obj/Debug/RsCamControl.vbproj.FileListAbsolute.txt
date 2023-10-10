@@ -20,3 +20,14 @@ C:\Users\Boardroom\Documents\GitHub\rscamcontrol\RsCamControl\obj\Debug\RsCamCon
 C:\Users\Boardroom\Documents\GitHub\rscamcontrol\RsCamControl\obj\Debug\RsCamControl.Form1.resources
 C:\Users\Boardroom\Documents\GitHub\rscamcontrol\RsCamControl\obj\Debug\RsCamControl.Resources.resources
 C:\Users\Boardroom\Documents\GitHub\rscamcontrol\RsCamControl\obj\Debug\RsCamControl.vbproj.GenerateResource.Cache
+C:\Users\timsk\Documents\GitHub\rscamcontrol\RsCamControl\bin\Debug\RsCamControl.exe.config
+C:\Users\timsk\Documents\GitHub\rscamcontrol\RsCamControl\obj\Debug\RsCamControl.exe
+C:\Users\timsk\Documents\GitHub\rscamcontrol\RsCamControl\obj\Debug\RsCamControl.xml
+C:\Users\timsk\Documents\GitHub\rscamcontrol\RsCamControl\obj\Debug\RsCamControl.pdb
+C:\Users\timsk\Documents\GitHub\rscamcontrol\RsCamControl\bin\Debug\RsCamControl.exe
+C:\Users\timsk\Documents\GitHub\rscamcontrol\RsCamControl\bin\Debug\RsCamControl.pdb
+C:\Users\timsk\Documents\GitHub\rscamcontrol\RsCamControl\bin\Debug\RsCamControl.xml
+C:\Users\timsk\Documents\GitHub\rscamcontrol\RsCamControl\obj\Debug\RsCamControl.vbprojResolveAssemblyReference.cache
+C:\Users\timsk\Documents\GitHub\rscamcontrol\RsCamControl\obj\Debug\RsCamControl.Form1.resources
+C:\Users\timsk\Documents\GitHub\rscamcontrol\RsCamControl\obj\Debug\RsCamControl.Resources.resources
+C:\Users\timsk\Documents\GitHub\rscamcontrol\RsCamControl\obj\Debug\RsCamControl.vbproj.GenerateResource.Cache

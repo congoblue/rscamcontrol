@@ -50,6 +50,7 @@ Public Class Form1
     Dim prevbtnstate2 As Integer = 0
     Dim startuptimer As Integer = 0
     Dim connectok As Boolean = False
+    Dim BtnDownTime As Integer = 0
 
     Private Sub Receiver()
         'Dim endPoint As IPEndPoint = New IPEndPoint(IPAddress.Any, port) 'Listen for incoming data from any IP address on the specified port (I personally select 9653)
@@ -224,23 +225,46 @@ Public Class Form1
 
             If (.dwRpos <> prevbtnstate2) Then 'button state has changed (bottom 8 buttons)
 
-                If (.dwRpos <> prevbtnstate2) Then  'new button pressed (otherwise released)
-                    If (.dwRpos = &H7FFF) Then
-                        SendPreset(2, 4)
-                    Else
-                        If (.dwRpos And &H100) Then SendPreset(1, 1) 'preset 1 cam 1
-                        If (.dwRpos And &H200) Then SendPreset(1, 2)
-                        If (.dwRpos And &H400) Then SendPreset(1, 3)
-                        If (.dwRpos And &H800) Then SendPreset(1, 4)
-                        If (.dwRpos And &H1000) Then SendPreset(2, 1) 'preset 1 cam 2
-                        If (.dwRpos And &H2000) Then SendPreset(2, 2)
-                        If (.dwRpos And &H4000) Then SendPreset(2, 3)
+                If (.dwRpos < prevbtnstate2) Then  'button released
+                    If (BtnDownTime < 40) Then 'short press - recall preset
+                        If (.dwRpos = &H7FFF) Then
+                            SendPreset(2, 4)
+                        Else
+                            If (.dwRpos And &H100) Then SendPreset(1, 1) 'preset 1 cam 1
+                            If (.dwRpos And &H200) Then SendPreset(1, 2)
+                            If (.dwRpos And &H400) Then SendPreset(1, 3)
+                            If (.dwRpos And &H800) Then SendPreset(1, 4)
+                            If (.dwRpos And &H1000) Then SendPreset(2, 1) 'preset 1 cam 2
+                            If (.dwRpos And &H2000) Then SendPreset(2, 2)
+                            If (.dwRpos And &H4000) Then SendPreset(2, 3)
+                        End If
+
                     End If
-
-
                 End If
 
                 prevbtnstate2 = .dwRpos
+            End If
+
+            If (.dwRpos <> 0) Then 'something is pressed in the bottom 8 buttons
+                BtnDownTime = BtnDownTime + 1
+                If (BtnDownTime = 40) Then
+                    'MsgBox("STORE")
+                    If (.dwRpos = &H7FFF) Then
+                        StorePreset(2, 4)
+                    Else
+                        If (.dwRpos And &H100) Then StorePreset(1, 1) 'preset 1 cam 1
+                        If (.dwRpos And &H200) Then StorePreset(1, 2)
+                        If (.dwRpos And &H400) Then StorePreset(1, 3)
+                        If (.dwRpos And &H800) Then StorePreset(1, 4)
+                        If (.dwRpos And &H1000) Then StorePreset(2, 1) 'preset 1 cam 2
+                        If (.dwRpos And &H2000) Then StorePreset(2, 2)
+                        If (.dwRpos And &H4000) Then StorePreset(2, 3)
+                    End If
+
+                End If
+
+            Else 'nothing is pressed in the bottom 8 buttons
+                    BtnDownTime = 0
             End If
 
 
@@ -404,13 +428,30 @@ Public Class Form1
     End Sub
 
     Sub SendPreset(cam As Integer, prnum As Integer)
+        If (RadioButton2.Checked = True) Then StorePreset(cam, prnum) : Exit Sub
+
         Dim oc = camnum
 
         sendBytes(0) = &H81
         sendBytes(1) = &H1
         sendBytes(2) = &H4
         sendBytes(3) = &H3F
-        If (RadioButton1.Checked = True) Then sendBytes(4) = &H2 : Else sendBytes(4) = &H1 '2=recall 1=store
+        sendBytes(4) = &H2 '2=recall 1=store
+        sendBytes(5) = prnum
+        sendBytes(6) = &HFF
+        camnum = cam
+        ViscaSend(sendBytes, 7)
+        camnum = oc
+    End Sub
+
+    Sub StorePreset(cam As Integer, prnum As Integer)
+        Dim oc = camnum
+
+        sendBytes(0) = &H81
+        sendBytes(1) = &H1
+        sendBytes(2) = &H4
+        sendBytes(3) = &H3F
+        sendBytes(4) = &H1 '2=recall 1=store
         sendBytes(5) = prnum
         sendBytes(6) = &HFF
         camnum = cam
@@ -429,5 +470,36 @@ Public Class Form1
         Else
             SendPreset(1, pn)
         End If
+    End Sub
+
+    Private Sub Button9_Click(sender As Object, e As EventArgs) Handles Button9.Click
+        Dim oc = camnum
+        sendBytes(0) = &H81 'set onetouch wb
+        sendBytes(1) = &H1
+        sendBytes(2) = &H4
+        sendBytes(3) = &H35
+        sendBytes(4) = &H3
+        sendBytes(5) = &HFF
+        camnum = 2
+        ViscaSend(sendBytes, 6)
+        camnum = 1
+        ViscaSend(sendBytes, 6)
+        camnum = oc
+    End Sub
+
+    Private Sub Button10_Click(sender As Object, e As EventArgs) Handles Button10.Click
+        Dim oc = camnum '81 01 04 10 05 FF 
+        sendBytes(0) = &H81 'onetouch trig
+        sendBytes(1) = &H1
+        sendBytes(2) = &H4
+        sendBytes(3) = &H10
+        sendBytes(4) = &H5
+        sendBytes(5) = &HFF
+        camnum = 2
+        ViscaSend(sendBytes, 6)
+        camnum = 1
+        ViscaSend(sendBytes, 6)
+        camnum = oc
+
     End Sub
 End Class
