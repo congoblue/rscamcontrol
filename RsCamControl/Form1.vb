@@ -227,16 +227,16 @@ Public Class Form1
 
                 If (.dwRpos < prevbtnstate2) Then  'button released
                     If (BtnDownTime < 40) Then 'short press - recall preset
-                        If (.dwRpos = &H7FFF) Then
+                        If (prevbtnstate2 = &H7FFF) Then
                             SendPreset(2, 4)
                         Else
-                            If (.dwRpos And &H100) Then SendPreset(1, 1) 'preset 1 cam 1
-                            If (.dwRpos And &H200) Then SendPreset(1, 2)
-                            If (.dwRpos And &H400) Then SendPreset(1, 3)
-                            If (.dwRpos And &H800) Then SendPreset(1, 4)
-                            If (.dwRpos And &H1000) Then SendPreset(2, 1) 'preset 1 cam 2
-                            If (.dwRpos And &H2000) Then SendPreset(2, 2)
-                            If (.dwRpos And &H4000) Then SendPreset(2, 3)
+                            If (prevbtnstate2 And &H100) Then SendPreset(1, 1) 'preset 1 cam 1
+                            If (prevbtnstate2 And &H200) Then SendPreset(1, 2)
+                            If (prevbtnstate2 And &H400) Then SendPreset(1, 3)
+                            If (prevbtnstate2 And &H800) Then SendPreset(1, 4)
+                            If (prevbtnstate2 And &H1000) Then SendPreset(2, 1) 'preset 1 cam 2
+                            If (prevbtnstate2 And &H2000) Then SendPreset(2, 2)
+                            If (prevbtnstate2 And &H4000) Then SendPreset(2, 3)
                         End If
 
                     End If
