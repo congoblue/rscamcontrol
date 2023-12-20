@@ -5,6 +5,8 @@ Imports System.Net
 Imports System.Net.Sockets
 Imports System.Threading
 Imports System.Text
+Imports OpenMacroBoard.SDK
+Imports StreamDeckSharp
 
 
 Public Class Form1
@@ -51,6 +53,8 @@ Public Class Form1
     Dim startuptimer As Integer = 0
     Dim connectok As Boolean = False
     Dim BtnDownTime As Integer = 0
+    Dim PrevInput As Integer
+    Dim ProgInput As Integer
 
     Private Sub Receiver()
         'Dim endPoint As IPEndPoint = New IPEndPoint(IPAddress.Any, port) 'Listen for incoming data from any IP address on the specified port (I personally select 9653)
@@ -501,5 +505,58 @@ Public Class Form1
         ViscaSend(sendBytes, 6)
         camnum = oc
 
+    End Sub
+
+    Private Function SendVmixAPI(cmd As String)
+        If cmd = "" Then cmd = "http://127.0.0.1:8088/api" : Else cmd = "http://127.0.0.1:8088/api/?Function=" + cmd
+        Dim myHttpWebRequest As HttpWebRequest = CType(WebRequest.Create(cmd), HttpWebRequest)
+        myHttpWebRequest.Method = "GET"
+        myHttpWebRequest.Timeout = 500
+        Dim myHttpWebResponse As HttpWebResponse
+        Try
+            myHttpWebResponse = CType(myHttpWebRequest.GetResponse(), HttpWebResponse)
+        Catch ex As WebException
+            SendVmixAPI = ""
+            Exit Function
+        Catch
+            SendVmixAPI = ""
+            Exit Function
+        End Try
+        Dim postreqreader As New System.IO.StreamReader(myHttpWebResponse.GetResponseStream())
+        SendVmixAPI = postreqreader.ReadToEnd
+        myHttpWebResponse.Close()
+    End Function
+
+    Private Function GetVmixKey(stat As String, keyname As String)
+        Dim vmixstat As XElement = XElement.Parse(stat)
+        Dim key As XName = XName.Get(keyname)
+        GetVmixKey = vmixstat.Element(key).Value
+    End Function
+
+    Private Sub UpdateVmixStatus()
+        Dim Stat = SendVmixAPI("")
+        If Stat <> "" Then
+            If GetVmixKey(Stat, "recording") = "True" Then LabelRec.ForeColor = Color.Red : Else LabelRec.ForeColor = Color.Black
+            If GetVmixKey(Stat, "streaming") = "True" Then LabelStream.ForeColor = Color.Red : Else LabelStream.ForeColor = Color.Black
+            PrevInput = GetVmixKey(Stat, "preview")
+            ProgInput = GetVmixKey(Stat, "active")
+            LabelPrvPrg.Text = "Prv: " & PrevInput & " Prg: " & ProgInput : LabelPrvPrg.ForeColor = Color.Black
+        Else
+            LabelRec.ForeColor = Color.Gray : LabelStream.ForeColor = Color.Gray : LabelPrvPrg.ForeColor = Color.Gray
+        End If
+
+    End Sub
+
+    Private Sub Button11_Click(sender As Object, e As EventArgs) Handles Button11.Click
+        ' see https://forum.linqpad.net/discussion/2916/need-netstandard-2-0-reference-in-linqpad-v5
+        'SendVmixAPI("StartStopRecording")
+        Using deck = StreamDeck.OpenDevice()
+            deck.SetBrightness(100)
+            Dim ver = deck.GetFirmwareVersion
+        End Using
+    End Sub
+
+    Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
+        UpdateVmixStatus()
     End Sub
 End Class
