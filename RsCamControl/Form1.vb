@@ -200,11 +200,11 @@ Public Class Form1
                         PictureBox1.BackColor = Color.DimGray
                         PictureBox2.BackColor = Color.Red
                     End If
-                    If (.dwButtons And 4) Then 'focus lock cam 1
-                        If (CheckBox1.Checked = True) Then CheckBox1.Checked = False : Else CheckBox1.Checked = True
+                    If (.dwButtons And 8) Then 'focus lock cam 1
+                        If (CheckBox1.Checked = True) Then CheckBox1.Checked = False Else CheckBox1.Checked = True
                     End If
-                    If (.dwButtons And 8) Then 'focus lock cam 2
-                        If (CheckBox2.Checked = True) Then CheckBox2.Checked = False : Else CheckBox2.Checked = True
+                    If (.dwButtons And 4) Then 'focus lock cam 2
+                        If (CheckBox2.Checked = True) Then CheckBox2.Checked = False Else CheckBox2.Checked = True
                     End If
                     If (.dwButtons And 16) Then 'ev cam 1
                         If (NumericUpDown1.Value < 7) Then NumericUpDown1.Value = NumericUpDown1.Value + 1
