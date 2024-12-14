@@ -502,4 +502,8 @@ Public Class Form1
         camnum = oc
 
     End Sub
+
+    Private Sub TextBoxCam1_TextChanged(sender As Object, e As EventArgs) Handles TextBoxCam1.TextChanged
+
+    End Sub
 End Class
