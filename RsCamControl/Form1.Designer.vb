@@ -55,11 +55,10 @@ Partial Class Form1
         '
         'TextBox1
         '
-        Me.TextBox1.Location = New System.Drawing.Point(42, 325)
-        Me.TextBox1.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.TextBox1.Location = New System.Drawing.Point(21, 169)
         Me.TextBox1.Multiline = True
         Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(944, 532)
+        Me.TextBox1.Size = New System.Drawing.Size(474, 279)
         Me.TextBox1.TabIndex = 0
         '
         'Timer1
@@ -67,79 +66,71 @@ Partial Class Form1
         '
         'TextBoxCam1
         '
-        Me.TextBoxCam1.Location = New System.Drawing.Point(24, 52)
-        Me.TextBoxCam1.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.TextBoxCam1.Location = New System.Drawing.Point(12, 27)
         Me.TextBoxCam1.Name = "TextBoxCam1"
-        Me.TextBoxCam1.Size = New System.Drawing.Size(230, 31)
+        Me.TextBoxCam1.Size = New System.Drawing.Size(117, 20)
         Me.TextBoxCam1.TabIndex = 1
-        Me.TextBoxCam1.Text = "172.16.10.93"
+        Me.TextBoxCam1.Text = "192.168.1.96"
         '
         'TextBoxCam2
         '
-        Me.TextBoxCam2.Location = New System.Drawing.Point(24, 102)
-        Me.TextBoxCam2.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.TextBoxCam2.Location = New System.Drawing.Point(12, 53)
         Me.TextBoxCam2.Name = "TextBoxCam2"
-        Me.TextBoxCam2.Size = New System.Drawing.Size(230, 31)
+        Me.TextBoxCam2.Size = New System.Drawing.Size(117, 20)
         Me.TextBoxCam2.TabIndex = 2
-        Me.TextBoxCam2.Text = "172.16.10.94"
+        Me.TextBoxCam2.Text = "192.168.1.97"
         '
         'PictureBox1
         '
         Me.PictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.PictureBox1.Location = New System.Drawing.Point(276, 52)
-        Me.PictureBox1.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.PictureBox1.Location = New System.Drawing.Point(138, 27)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(40, 35)
+        Me.PictureBox1.Size = New System.Drawing.Size(21, 19)
         Me.PictureBox1.TabIndex = 3
         Me.PictureBox1.TabStop = False
         '
         'PictureBox2
         '
         Me.PictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.PictureBox2.Location = New System.Drawing.Point(276, 103)
-        Me.PictureBox2.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.PictureBox2.Location = New System.Drawing.Point(138, 54)
         Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(40, 35)
+        Me.PictureBox2.Size = New System.Drawing.Size(21, 19)
         Me.PictureBox2.TabIndex = 4
         Me.PictureBox2.TabStop = False
         '
         'NumericUpDown1
         '
-        Me.NumericUpDown1.Location = New System.Drawing.Point(348, 50)
-        Me.NumericUpDown1.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.NumericUpDown1.Location = New System.Drawing.Point(174, 26)
         Me.NumericUpDown1.Maximum = New Decimal(New Integer() {7, 0, 0, 0})
         Me.NumericUpDown1.Minimum = New Decimal(New Integer() {7, 0, 0, -2147483648})
         Me.NumericUpDown1.Name = "NumericUpDown1"
-        Me.NumericUpDown1.Size = New System.Drawing.Size(84, 31)
+        Me.NumericUpDown1.Size = New System.Drawing.Size(42, 20)
         Me.NumericUpDown1.TabIndex = 5
         '
         'NumericUpDown2
         '
-        Me.NumericUpDown2.Location = New System.Drawing.Point(348, 103)
-        Me.NumericUpDown2.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.NumericUpDown2.Location = New System.Drawing.Point(174, 54)
         Me.NumericUpDown2.Maximum = New Decimal(New Integer() {7, 0, 0, 0})
         Me.NumericUpDown2.Minimum = New Decimal(New Integer() {7, 0, 0, -2147483648})
         Me.NumericUpDown2.Name = "NumericUpDown2"
-        Me.NumericUpDown2.Size = New System.Drawing.Size(84, 31)
+        Me.NumericUpDown2.Size = New System.Drawing.Size(42, 20)
         Me.NumericUpDown2.TabIndex = 6
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(348, 9)
-        Me.Label1.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.Label1.Location = New System.Drawing.Point(174, 5)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(40, 25)
+        Me.Label1.Size = New System.Drawing.Size(21, 13)
         Me.Label1.TabIndex = 7
         Me.Label1.Text = "EV"
         '
         'CheckBox1
         '
         Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Location = New System.Drawing.Point(458, 58)
-        Me.CheckBox1.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.CheckBox1.Location = New System.Drawing.Point(229, 30)
         Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(90, 29)
+        Me.CheckBox1.Size = New System.Drawing.Size(50, 17)
         Me.CheckBox1.TabIndex = 8
         Me.CheckBox1.Text = "Lock"
         Me.CheckBox1.UseVisualStyleBackColor = True
@@ -147,10 +138,9 @@ Partial Class Form1
         'CheckBox2
         '
         Me.CheckBox2.AutoSize = True
-        Me.CheckBox2.Location = New System.Drawing.Point(458, 106)
-        Me.CheckBox2.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.CheckBox2.Location = New System.Drawing.Point(229, 55)
         Me.CheckBox2.Name = "CheckBox2"
-        Me.CheckBox2.Size = New System.Drawing.Size(90, 29)
+        Me.CheckBox2.Size = New System.Drawing.Size(50, 17)
         Me.CheckBox2.TabIndex = 9
         Me.CheckBox2.Text = "Lock"
         Me.CheckBox2.UseVisualStyleBackColor = True
@@ -158,10 +148,9 @@ Partial Class Form1
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(452, 9)
-        Me.Label2.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.Label2.Location = New System.Drawing.Point(226, 5)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(71, 25)
+        Me.Label2.Size = New System.Drawing.Size(36, 13)
         Me.Label2.TabIndex = 10
         Me.Label2.Text = "Focus"
         '
@@ -169,10 +158,9 @@ Partial Class Form1
         '
         Me.RadioButton1.AutoSize = True
         Me.RadioButton1.Checked = True
-        Me.RadioButton1.Location = New System.Drawing.Point(600, 6)
-        Me.RadioButton1.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.RadioButton1.Location = New System.Drawing.Point(300, 3)
         Me.RadioButton1.Name = "RadioButton1"
-        Me.RadioButton1.Size = New System.Drawing.Size(103, 29)
+        Me.RadioButton1.Size = New System.Drawing.Size(55, 17)
         Me.RadioButton1.TabIndex = 11
         Me.RadioButton1.TabStop = True
         Me.RadioButton1.Text = "Recall"
@@ -181,119 +169,110 @@ Partial Class Form1
         'RadioButton2
         '
         Me.RadioButton2.AutoSize = True
-        Me.RadioButton2.Location = New System.Drawing.Point(722, 6)
-        Me.RadioButton2.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.RadioButton2.Location = New System.Drawing.Point(361, 3)
         Me.RadioButton2.Name = "RadioButton2"
-        Me.RadioButton2.Size = New System.Drawing.Size(75, 29)
+        Me.RadioButton2.Size = New System.Drawing.Size(41, 17)
         Me.RadioButton2.TabIndex = 12
         Me.RadioButton2.Text = "Set"
         Me.RadioButton2.UseVisualStyleBackColor = True
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(570, 50)
-        Me.Button1.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.Button1.Location = New System.Drawing.Point(285, 26)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(100, 44)
+        Me.Button1.Size = New System.Drawing.Size(50, 23)
         Me.Button1.TabIndex = 13
         Me.Button1.Text = "1"
         Me.Button1.UseVisualStyleBackColor = True
         '
         'Button2
         '
-        Me.Button2.Location = New System.Drawing.Point(682, 50)
-        Me.Button2.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.Button2.Location = New System.Drawing.Point(341, 26)
         Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(100, 44)
+        Me.Button2.Size = New System.Drawing.Size(50, 23)
         Me.Button2.TabIndex = 14
         Me.Button2.Text = "2"
         Me.Button2.UseVisualStyleBackColor = True
         '
         'Button3
         '
-        Me.Button3.Location = New System.Drawing.Point(794, 50)
-        Me.Button3.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.Button3.Location = New System.Drawing.Point(397, 26)
         Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(100, 44)
+        Me.Button3.Size = New System.Drawing.Size(50, 23)
         Me.Button3.TabIndex = 15
         Me.Button3.Text = "3"
         Me.Button3.UseVisualStyleBackColor = True
         '
         'Button4
         '
-        Me.Button4.Location = New System.Drawing.Point(906, 50)
-        Me.Button4.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.Button4.Location = New System.Drawing.Point(453, 26)
         Me.Button4.Name = "Button4"
-        Me.Button4.Size = New System.Drawing.Size(100, 44)
+        Me.Button4.Size = New System.Drawing.Size(50, 23)
         Me.Button4.TabIndex = 16
         Me.Button4.Text = "4"
         Me.Button4.UseVisualStyleBackColor = True
         '
         'Button8
         '
-        Me.Button8.Location = New System.Drawing.Point(906, 98)
-        Me.Button8.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.Button8.Location = New System.Drawing.Point(453, 51)
         Me.Button8.Name = "Button8"
-        Me.Button8.Size = New System.Drawing.Size(100, 44)
+        Me.Button8.Size = New System.Drawing.Size(50, 23)
         Me.Button8.TabIndex = 20
         Me.Button8.Text = "4"
         Me.Button8.UseVisualStyleBackColor = True
         '
         'Button7
         '
-        Me.Button7.Location = New System.Drawing.Point(794, 98)
-        Me.Button7.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.Button7.Location = New System.Drawing.Point(397, 51)
         Me.Button7.Name = "Button7"
-        Me.Button7.Size = New System.Drawing.Size(100, 44)
+        Me.Button7.Size = New System.Drawing.Size(50, 23)
         Me.Button7.TabIndex = 19
         Me.Button7.Text = "3"
         Me.Button7.UseVisualStyleBackColor = True
         '
         'Button6
         '
-        Me.Button6.Location = New System.Drawing.Point(682, 98)
-        Me.Button6.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.Button6.Location = New System.Drawing.Point(341, 51)
         Me.Button6.Name = "Button6"
-        Me.Button6.Size = New System.Drawing.Size(100, 44)
+        Me.Button6.Size = New System.Drawing.Size(50, 23)
         Me.Button6.TabIndex = 18
         Me.Button6.Text = "2"
         Me.Button6.UseVisualStyleBackColor = True
         '
         'Button5
         '
-        Me.Button5.Location = New System.Drawing.Point(570, 98)
-        Me.Button5.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.Button5.Location = New System.Drawing.Point(285, 51)
         Me.Button5.Name = "Button5"
-        Me.Button5.Size = New System.Drawing.Size(100, 44)
+        Me.Button5.Size = New System.Drawing.Size(50, 23)
         Me.Button5.TabIndex = 17
         Me.Button5.Text = "1"
         Me.Button5.UseVisualStyleBackColor = True
         '
         'Button9
         '
-        Me.Button9.Location = New System.Drawing.Point(1066, 19)
-        Me.Button9.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.Button9.Location = New System.Drawing.Point(533, 10)
+        Me.Button9.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.Button9.Name = "Button9"
-        Me.Button9.Size = New System.Drawing.Size(116, 47)
+        Me.Button9.Size = New System.Drawing.Size(58, 24)
         Me.Button9.TabIndex = 21
         Me.Button9.Text = "WB mode"
         Me.Button9.UseVisualStyleBackColor = True
         '
         'Button10
         '
-        Me.Button10.Location = New System.Drawing.Point(1066, 75)
-        Me.Button10.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.Button10.Location = New System.Drawing.Point(533, 39)
+        Me.Button10.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.Button10.Name = "Button10"
-        Me.Button10.Size = New System.Drawing.Size(116, 47)
+        Me.Button10.Size = New System.Drawing.Size(58, 24)
         Me.Button10.TabIndex = 22
         Me.Button10.Text = "WB trig"
         Me.Button10.UseVisualStyleBackColor = True
         '
         'Form1
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(12.0!, 25.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1200, 177)
+        Me.ClientSize = New System.Drawing.Size(600, 92)
         Me.Controls.Add(Me.Button10)
         Me.Controls.Add(Me.Button9)
         Me.Controls.Add(Me.Button8)
@@ -317,7 +296,6 @@ Partial Class Form1
         Me.Controls.Add(Me.TextBoxCam2)
         Me.Controls.Add(Me.TextBoxCam1)
         Me.Controls.Add(Me.TextBox1)
-        Me.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
         Me.Name = "Form1"
         Me.Text = "RsCamControl"
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()

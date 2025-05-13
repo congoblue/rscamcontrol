@@ -70,6 +70,9 @@ Public Class Form1
         PictureBox1.BackColor = Color.Red
         PictureBox2.BackColor = Color.DimGray
 
+        TextBoxCam1.Text = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\RsCamControl", "Cam1IP", "192.168.1.201")
+        TextBoxCam2.Text = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\RsCamControl", "Cam2IP", "192.168.1.202")
+
         myjoyEX.dwSize = 64
         myjoyEX.dwFlags = &HFF ' All information
         Timer1.Interval = 50  'Update at 20 hz
@@ -503,7 +506,16 @@ Public Class Form1
 
     End Sub
 
-    Private Sub TextBoxCam1_TextChanged(sender As Object, e As EventArgs) Handles TextBoxCam1.TextChanged
-
+    Private Sub TextBoxCam1_LostFocus(sender As Object, e As EventArgs) Handles TextBoxCam1.LostFocus
+        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\RsCamControl", "Cam1IP", TextBoxCam1.Text)
+        'udpClient1.Close()
+        udpClient1.Connect(TextBoxCam1.Text, 1259)
     End Sub
+
+    Private Sub TextBoxCam2_LostFocus(sender As Object, e As EventArgs) Handles TextBoxCam2.LostFocus
+        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\RsCamControl", "Cam2IP", TextBoxCam2.Text)
+        'udpClient2.Close()
+        udpClient2.Connect(TextBoxCam2.Text, 1259)
+    End Sub
+
 End Class
